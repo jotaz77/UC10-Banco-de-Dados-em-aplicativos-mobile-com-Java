@@ -1,0 +1,80 @@
+-- ============================================
+-- CRIAÇÃO DO BANCO DE DADOS
+-- ============================================
+
+CREATE DATABASE ComaBem;
+USE ComaBem;
+
+-- ============================================
+-- CRIAÇÃO DA TABELA PRODUTO
+-- ============================================
+
+CREATE TABLE Produto (
+    id_produto INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(50) NOT NULL,
+    preco DECIMAL(10,2) NOT NULL,
+    quantidade DECIMAL(10,2) NOT NULL,
+    unidade_medida VARCHAR(20) NOT NULL
+);
+
+-- ============================================
+-- INSERÇÃO DE DADOS (CREATE)
+-- ============================================
+
+INSERT INTO Produto (nome, preco, quantidade, unidade_medida)
+VALUES
+('Carne', 30.00, 2.0, 'kg'),
+('Óleo', 30.00, 1.0, 'unidade'),
+('Leite', 30.00, 1.5, 'litros'),
+('Alface', 30.00, 1.0, 'unidade');
+
+-- ============================================
+-- CONSULTA DE DADOS (READ)
+-- ============================================
+
+-- Consulta todos os produtos
+SELECT * FROM Produto;
+
+-- Consulta nome e preço
+SELECT nome, preco FROM Produto;
+
+-- Consulta produtos acima de R$20
+SELECT * FROM Produto
+WHERE preco > 20;
+
+-- Consulta produto específico pelo ID
+SELECT * FROM Produto
+WHERE id_produto = 1;
+
+
+-- ALTERAÇÃO DE DADOS (UPDATE)
+
+
+-- Alterar o preço da Carne
+UPDATE Produto
+SET preco = 35.00
+WHERE nome = 'Carne';
+
+-- Alterar quantidade do Óleo
+UPDATE Produto
+SET quantidade = 3.0
+WHERE nome = 'Óleo';
+
+-- Alterar vários campos do produto ID 4
+UPDATE Produto
+SET preco = 25.00,
+    unidade_medida = 'kg'
+WHERE id_produto = 4;
+
+-- EXCLUSÃO DE DADOS (DELETE)
+
+-- Excluir produto pelo nome
+DELETE FROM Produto
+WHERE nome = 'Leite';
+
+-- Excluir produto pelo ID
+DELETE FROM Produto
+WHERE id_produto = 2;
+
+-- Excluir TODOS os produtos (cuidado!)
+-- DELETE FROM Produto;
