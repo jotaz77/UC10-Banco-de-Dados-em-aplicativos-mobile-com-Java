@@ -1,0 +1,92 @@
+-- ===========================================
+-- CRIAÇÃO DO BANCO
+-- ===========================================
+CREATE DATABASE ComaBem;
+USE ComaBem;
+
+-- ===========================================
+-- CRIAÇÃO DA TABELA PRODUTO
+-- ===========================================
+CREATE TABLE Produto (
+	id_produto INT AUTO_INCREMENT PRIMARY KEY,
+	nome VARCHAR(50) NOT NULL,
+	preco DECIMAL(10,2) NOT NULL,
+	quantidade DECIMAL(10,2) NOT NULL,
+	unidade_medida VARCHAR(20) NOT NULL
+);
+
+-- ===========================================
+-- INSERÇÃO DE DADOS (INSERT)
+-- ===========================================
+INSERT INTO Produto (nome, preco, quantidade, unidade_medida)
+VALUES
+('Carne', 30.00, 2.0, 'kg'),
+('Óleo', 30.00, 1.0, 'unidade'),
+('Leite', 30.00, 1.5, 'litros'),
+('Alface', 30.00, 1.0, 'unidade');
+
+-- ===========================================
+-- CONSULTA DE DADOS (SELECT)
+-- ===========================================
+-- Seleciona todos os produtos
+SELECT * FROM Produto;
+
+-- Seleciona produtos com preço acima de 20
+SELECT * FROM Produto WHERE preco > 20;
+
+-- Seleciona apenas nome e preço
+SELECT nome, preco FROM Produto;
+
+-- ===========================================
+-- ATUALIZAÇÃO DE DADOS (UPDATE)
+-- ===========================================
+-- Exemplo: alterar o preço do óleo
+UPDATE Produto
+SET preco = 25.00
+WHERE nome = 'Óleo';
+
+-- Exemplo: alterar a quantidade da carne
+UPDATE Produto
+SET quantidade = 3.0
+WHERE nome = 'Carne';
+
+-- EXCLUSÃO DE DADOS (DELETE)
+
+-- Exemplo: excluir o produto Alface
+DELETE FROM Produto
+WHERE nome = 'Alface';
+
+-- Exemplo: excluir produto por ID
+DELETE FROM Produto
+WHERE id_produto = 2;
+
+-- SISTEMA DE SEGURANÇA E PERFIS DE USUÁRIO
+
+-- Usuário somente para CONSULTA
+CREATE USER 'usuario_consulta'@'%' IDENTIFIED BY 'senha123';
+GRANT SELECT ON ComaBem.* TO 'usuario_consulta'@'%';
+
+-- Usuário para INSERIR e CONSULTAR
+CREATE USER 'usuario_insercao'@'%' IDENTIFIED BY 'senha123';
+GRANT SELECT, INSERT ON ComaBem.* TO 'usuario_insercao'@'%';
+
+-- Usuário para ATUALIZAR registros
+CREATE USER 'usuario_update'@'%' IDENTIFIED BY 'senha123';
+GRANT SELECT, UPDATE ON ComaBem.* TO 'usuario_update'@'%';
+
+-- Usuário para EXCLUIR registros
+CREATE USER 'usuario_delete'@'%' IDENTIFIED BY 'senha123';
+GRANT SELECT, DELETE ON ComaBem.* TO 'usuario_delete'@'%';
+
+-- Usuário administrador (todos os privilégios)
+CREATE USER 'admin_comabem'@'%' IDENTIFIED BY 'admin123';
+GRANT ALL PRIVILEGES ON ComaBem.* TO 'admin_comabem'@'%';
+
+-- Atualiza privilégios
+FLUSH PRIVILEGES;
+
+-- ===========================================
+-- CONSULTA DE PERMISSÕES DE UM USUÁRIO
+-- ===========================================
+-- Exemplo:
+SHOW GRANTS FOR 'usuario_consulta'@'%';
